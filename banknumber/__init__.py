@@ -1,7 +1,7 @@
 #This file is part of banknumber. The COPYRIGHT file at the top level of
 #this repository contains the full copyright notices and license terms.
 '''
-Check the Bank code depending of the country
+Check the Bank code depending on the country
 '''
 __version__ = '1.0'
 
@@ -19,11 +19,11 @@ def check_code_es(number):
     Check Spanish Bank code.
     '''
     def get_control(ten_digits):
-        valores = [1, 2, 4, 8, 5, 10, 9, 7, 3, 6];
-        valor = ten_digits
+        values = [1, 2, 4, 8, 5, 10, 9, 7, 3, 6];
+        value = ten_digits
         control = 0;
         for i in range(10):
-            control += int(int(valor[i]) * valores[i])
+            control += int(int(value[i]) * values[i])
         control = 11 - (control % 11)
         if control == 11: 
             control = 0
@@ -34,26 +34,26 @@ def check_code_es(number):
     if len(number) !=20 or not number.isdigit():
         return False
 
-    valor = '00'+ number[0:8]
-    d1 = get_control(valor);
+    value = '00'+ number[0:8]
+    d1 = get_control(value);
     if d1 != int(number[8]):
         return False
 
-    valor = number[10:20]
-    d2 = get_control(valor);
+    value = number[10:20]
+    d2 = get_control(value);
     if d2 != int(number[9]):
         return False
 
     return True
 
-def check_code(account):
+def check_code(country, account):
     '''
-    Check Bank code.
+    Check bank code for the given country which should be a 
+    two digit ISO 3166 code.
     '''
-    code = account[:2].lower()
-    number = account[2:]
     try:
-        checker = globals()['check_code_%s' % code]
+        checker = globals()['check_code_%s' % country.lower()]
     except KeyError:
+        raise
         return False
-    return checker(number)
+    return checker(account)

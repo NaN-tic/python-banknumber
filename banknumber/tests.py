@@ -10,7 +10,7 @@ import banknumber
 BANK_CODES = [
     ('ES', '21000813610123456789', True),
     ('ES', '21000813610123456780', False),
-]
+    ]
 
 class BankNumberTest(unittest.TestCase):
     '''
@@ -21,18 +21,18 @@ class BankNumberTest(unittest.TestCase):
         '''
         Test Bank codes
         '''
-        for code, number, result in BANK_CODES:
+        for country, number, result in BANK_CODES:
             if result:
                 test = self.assert_
             else:
                 test = self.assertFalse
-            test(banknumber.check_code(code + number), code + number)
+            test(banknumber.check_code(country, number))
 
     def test_countries(self):
         '''
         Test countries
         '''
-        banknumber.countries()
+        self.assertEqual(banknumber.countries(), ['ES'])
 
 if __name__ == '__main__':
     unittest.main()
