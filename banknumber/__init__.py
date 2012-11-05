@@ -54,6 +54,5 @@ def check_code(country, account):
     try:
         checker = globals()['check_code_%s' % country.lower()]
     except KeyError:
-        raise
         return False
     return checker(account)
