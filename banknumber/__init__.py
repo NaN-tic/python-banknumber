@@ -1,5 +1,8 @@
 #This file is part of banknumber. The COPYRIGHT file at the top level of
 #this repository contains the full copyright notices and license terms.
+
+import string
+
 '''
 Check the Bank code depending on the country
 '''
@@ -59,3 +62,109 @@ def check_code(country, account):
     except KeyError:
         return False
     return checker(account)
+
+#
+#  The following code is addapted from django-iban.
+#
+#  See:
+#  https://github.com/benkonrath/django-iban
+#
+
+# Dictionary of ISO country code to IBAN length.
+# Data from:
+# https://en.wikipedia.org/wiki/International_Bank_Account_Number
+iban_length = {'AL': 28,
+               'AD': 24,
+               'AT': 20,
+               'AZ': 28,
+               'BE': 16,
+               'BH': 22,
+               'BA': 20,
+               'BG': 22,
+               'CR': 21,
+               'HR': 21,
+               'CY': 28,
+               'CZ': 24,
+               'DK': 18,
+               'DO': 28,
+               'EE': 20,
+               'FO': 18,
+               'FI': 18,
+               'FR': 27,
+               'GE': 22,
+               'DE': 22,
+               'GI': 23,
+               'GR': 27,
+               'GL': 18,
+               'HU': 28,
+               'IS': 26,
+               'IE': 22,
+               'IL': 23,
+               'IT': 27,
+               'KZ': 20,
+               'KW': 30,
+               'LV': 21,
+               'LB': 28,
+               'LI': 21,
+               'LT': 20,
+               'LU': 20,
+               'MK': 19,
+               'MT': 31,
+               'MR': 27,
+               'MU': 30,
+               'MC': 27,
+               'MD': 24,
+               'ME': 22,
+               'NL': 18,
+               'NO': 15,
+               'PS': 29,
+               'PL': 28,
+               'PK': 24,
+               'PT': 25,
+               'RO': 24,
+               'SM': 27,
+               'SA': 24,
+               'RS': 22,
+               'SK': 24,
+               'SI': 19,
+               'ES': 24,
+               'SE': 24,
+               'CH': 21,
+               'TN': 24,
+               'TR': 26,
+               'AE': 23,
+               'GB': 22,
+               'VG': 24,
+               'PF': 27,
+               'TF': 27,
+               'YT': 27,
+               'NC': 27,
+               'PM': 27,
+               'WF': 27}
+
+
+def check_iban(value):
+    """ Validation for ISO 13616-1:2007 (IBAN). """
+
+    country_code = value[:2]
+    if country_code in iban_length:
+        if iban_length[country_code] != len(value):
+            return False
+    else:
+        return False
+
+    value = value[4:] + value[:4]
+
+    value_digits = ""
+    for x in value:
+        ord_value = ord(x)
+        if 48 <= ord_value <= 57:  # 0 - 9
+            value_digits += x
+        elif 65 <= ord_value <= 90:  # A - Z
+            value_digits += str(ord_value - 55)
+        else:
+            return False
+
+    if int(value_digits) % 97 != 1:
+        return False
+    return True

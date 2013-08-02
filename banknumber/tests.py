@@ -12,6 +12,12 @@ BANK_CODES = [
     ('ES', '21000813610123456780', False),
     ]
 
+IBAN_CODES = [
+    ('ES7921000813610123456789', True),
+    ('ES7921000813610123456780', False),
+    ]
+
+
 class BankNumberTest(unittest.TestCase):
     '''
     Test Case for banknumber
@@ -27,6 +33,17 @@ class BankNumberTest(unittest.TestCase):
             else:
                 test = self.assertFalse
             test(banknumber.check_code(country, number))
+
+    def test_iban(self):
+        '''
+        Test IBAN codes
+        '''
+        for number, result in IBAN_CODES:
+            if result:
+                test = self.assert_
+            else:
+                test = self.assertFalse
+            test(banknumber.check_iban(number))
 
     def test_countries(self):
         '''
