@@ -16,7 +16,7 @@ setup(name='banknumber',
         url="http://www.zikzakmedia.com/",
         description="Python module to validate Bank codes",
         long_description=read('README'),
-        download_url="https://bitbucket.org/zikzakmedia/python-banknumber",
+        download_url="https://bitbucket.org/trytonspain/python-banknumber",
         packages=find_packages(),
         classifiers=[
             'Development Status :: 5 - Production/Stable',
