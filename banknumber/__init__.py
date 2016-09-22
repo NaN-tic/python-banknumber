@@ -6,7 +6,7 @@ import string
 '''
 Check the Bank code depending on the country
 '''
-__version__ = '1.0'
+__version__ = '2.0'
 
 
 def countries():
