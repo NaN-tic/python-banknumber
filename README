@@ -1,3 +1,7 @@
+The functionality implemented by this module is also implemented on
+python-stdnum library, so we recommend using python-stdnum as it provides
+more functionalities and it's more actively maintained.
+
 banknumber
 ==========
 
